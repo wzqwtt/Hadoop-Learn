@@ -5,20 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>hadoop-main</artifactId>
+        <artifactId>hadoop-common-project</artifactId>
         <groupId>com.wzq.hadoop</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>hadoop-common-project</artifactId>
+    <artifactId>component-learn</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>Hadoop Common Project</name>
-    <description>Hadoop Common Project</description>
-    <packaging>pom</packaging>
+    <name>Component Learn</name>
+    <description>Component Learn</description>
+    <packaging>jar</packaging>
 
-    <modules>
-        <module>hadoop-common</module>
-        <module>component-learn</module>
-    </modules>
 
 </project>
