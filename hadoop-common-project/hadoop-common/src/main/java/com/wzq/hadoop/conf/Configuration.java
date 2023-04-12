@@ -23,6 +23,8 @@ import java.util.regex.Pattern;
  */
 public class Configuration {
 
+    // ##################################################################################
+    // 属性
     private static final Logger LOG = LoggerFactory.getLogger(Configuration.class);
 
     /**
@@ -134,6 +136,9 @@ public class Configuration {
         // TODO public Configuration(Configuration other)
     }
 
+    // ##################################################################################
+    // 添加资源
+
     /**
      * 添加一个默认resource，
      *
@@ -188,29 +193,8 @@ public class Configuration {
         reloadConfiguration();
     }
 
-    /**
-     * 成员变量properties中的数据，直到需要的时候才会加载进来。延迟加载
-     *
-     * @return @{link properties}
-     */
-    private synchronized Properties getProps() {
-        if (properties == null) {
-            properties = new Properties();
-
-            // 触发loadResources加载配置资源
-            loadResources(properties, resources, quietmode);
-            if (overlay != null) {
-                properties.putAll(overlay);
-                if (storeResource) {
-                    for (Map.Entry<Object, Object> item : overlay.entrySet()) {
-                        updatingResource.put((String) item.getKey(), "Unknown");
-                    }
-                }
-            }
-        }
-
-        return properties;
-    }
+    // ##################################################################################
+    // 加载资源
 
     /**
      * 加载所有资源
@@ -368,6 +352,33 @@ public class Configuration {
         }
     }
 
+    // ##################################################################################
+    // Get
+
+    /**
+     * 成员变量properties中的数据，直到需要的时候才会加载进来。延迟加载
+     *
+     * @return @{link properties}
+     */
+    private synchronized Properties getProps() {
+        if (properties == null) {
+            properties = new Properties();
+
+            // 触发loadResources加载配置资源
+            loadResources(properties, resources, quietmode);
+            if (overlay != null) {
+                properties.putAll(overlay);
+                if (storeResource) {
+                    for (Map.Entry<Object, Object> item : overlay.entrySet()) {
+                        updatingResource.put((String) item.getKey(), "Unknown");
+                    }
+                }
+            }
+        }
+
+        return properties;
+    }
+
     public URL getResource(String name) {
         // 从这里获取文件
         URL url = classLoader.getResource(name);
@@ -375,9 +386,22 @@ public class Configuration {
         return url;
     }
 
+    public Properties getProperties() {
+        if (properties == null) {
+            properties = getProps();
+        }
+        return properties;
+    }
+
     private static Pattern varPat = Pattern.compile("\\$\\{[^\\}\\$\u0020]+\\}");
     private static int MAX_SUBST = 20;
 
+    /**
+     * 属性扩展
+     *
+     * @param expr
+     * @return
+     */
     private String substituteVars(String expr) {
         if (expr == null) {
             return null;
@@ -416,10 +440,6 @@ public class Configuration {
         }
         throw new IllegalStateException("Variable substitution depth too large: " + MAX_SUBST + " " + expr);
     }
-
-
-    // ##################################################################################
-    // Get
 
     public String getRaw(String name) {
         return getProps().getProperty(name);
@@ -573,5 +593,15 @@ public class Configuration {
 
     public void setStrings(String name, String... values) {
         // TODO Hadoop StringUtils工具类
+    }
+
+    // ##################################################################################
+    public int size() {
+        return getProps().size();
+    }
+
+    public void clear() {
+        getProps().clear();
+        getOverlay().clear();
     }
 }

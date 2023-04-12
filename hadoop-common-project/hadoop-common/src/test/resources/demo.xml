@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Do not modify this file directly.  Instead, copy entries that you -->
+<!-- wish to modify from this file into core-site.xml and change them -->
+<!-- there.  If core-site.xml does not already exist, create it.      -->
+
+<configuration>
+
+<!--- global properties -->
+
+<property>
+  <name>hadoop.tmp.dir</name>
+  <value>/tmp/hadoop-${user.name}</value>
+  <description>A base for other temporary directories.</description>
+</property>
+
+<property>
+  <name>hadoop.native.lib</name>
+  <value>true</value>
+  <description>Should native hadoop libraries, if present, be used.</description>
+</property>
+
+<property>
+  <name>hadoop.http.filter.initializers</name>
+  <value></value>
+  <description>A comma separated list of class names. Each class in the list 
+  must extend org.apache.hadoop.http.FilterInitializer. The corresponding 
+  Filter will be initialized. Then, the Filter will be applied to all user 
+  facing jsp and servlet web pages.  The ordering of the list defines the 
+  ordering of the filters.</description>
+</property>
+
+
+
+</configuration>

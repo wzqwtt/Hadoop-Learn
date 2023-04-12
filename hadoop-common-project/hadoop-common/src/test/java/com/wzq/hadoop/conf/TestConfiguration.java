@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URL;
+import java.util.Properties;
 
 /**
  * Configuration测试类
@@ -58,6 +59,13 @@ public class TestConfiguration {
         LOG.info("longProp : [{}], longPropValue : [{}]", longProp, longPropValue);
         LOG.info("floatProp : [{}], floatPropValue : [{}]", floatProp, floatPropValue);
         LOG.info("booleanProp : [{}], booleanPropValue : [{}]", booleanProp, booleanPropValue);
+    }
+
+    @Test
+    public void testGetProperties() {
+        Properties properties = configuration.getProperties();
+
+        LOG.debug(properties.toString());
     }
 
     @Test
