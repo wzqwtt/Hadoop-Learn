@@ -16,5 +16,13 @@
     <description>Component Learn</description>
     <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.wzq.hadoop</groupId>
+            <artifactId>hadoop-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 
 </project>
