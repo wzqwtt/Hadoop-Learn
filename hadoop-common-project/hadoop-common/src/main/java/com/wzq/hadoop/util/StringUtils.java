@@ -58,4 +58,23 @@ public class StringUtils {
         }
         return values;
     }
+
+    /**
+     * Given an array of strings, return a comma-seoarated list of its elements.
+     *
+     * @param strs Array of strings
+     * @return Empty string if strs.length is 0, comma-speared list of strings otherwise
+     */
+    public static String arrayToString(String[] strs) {
+        if (strs.length == 0) {
+            return "";
+        }
+        StringBuffer sbuf = new StringBuffer();
+        sbuf.append(strs[0]);
+        for (int i = 1; i < strs.length; i++) {
+            sbuf.append(",");
+            sbuf.append(strs[i]);
+        }
+        return sbuf.toString();
+    }
 }

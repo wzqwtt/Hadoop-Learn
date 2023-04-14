@@ -1,5 +1,6 @@
 package com.wzq.hadoop.conf;
 
+import com.wzq.hadoop.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.*;
@@ -553,6 +554,25 @@ public class Configuration {
         return overlay;
     }
 
+    public Collection<String> getStringCollection(String name) {
+        String valueString = get(name);
+        return StringUtils.getStringCollection(valueString);
+    }
+
+    public String[] getStrings(String name) {
+        String valueString = get(name);
+        return StringUtils.getStrings(valueString);
+    }
+
+    public String[] getStrings(String name, String... defaultValue) {
+        String valueString = get(name);
+        if (valueString == null) {
+            return defaultValue;
+        } else {
+            return StringUtils.getStrings(valueString);
+        }
+    }
+
     // ##################################################################################
     // Set
     public void set(String name, String value) {
@@ -591,7 +611,7 @@ public class Configuration {
     }
 
     public void setStrings(String name, String... values) {
-        // TODO Hadoop StringUtils工具类
+        set(name, StringUtils.arrayToString(values));
     }
 
     // ##################################################################################

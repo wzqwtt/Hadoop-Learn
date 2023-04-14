@@ -39,7 +39,7 @@ import java.io.IOException;
  * @author wzq
  * @create 2023-04-12 20:36
  */
-public interface Writeable {
+public interface Writable {
 
     /**
      * 输出(序列化)对象到流中

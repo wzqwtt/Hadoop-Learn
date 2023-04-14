@@ -1,6 +1,6 @@
 package com.wzq.hadoop.io.entity;
 
-import com.wzq.hadoop.io.Writeable;
+import com.wzq.hadoop.io.Writable;
 import lombok.Data;
 
 import java.io.DataInput;
@@ -12,7 +12,7 @@ import java.io.IOException;
  * @create 2023-04-12 21:13
  */
 @Data
-public class Block implements Writeable {
+public class Block implements Writable {
 
     private long blockId;
     private long numBytes;
