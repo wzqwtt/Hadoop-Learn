@@ -4,6 +4,7 @@ import com.wzq.hadoop.conf.Configurable;
 import com.wzq.hadoop.conf.Configuration;
 import com.wzq.hadoop.conf.Configured;
 import com.wzq.hadoop.io.Writable;
+import com.wzq.hadoop.io.WritableFactories;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -248,8 +249,8 @@ public class ObjectWritable implements Writable, Configurable {
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException("readObject can't find class " + str, e);
             }
-            // TODO Writable Factory create new Instance
-            Writable writable = null;
+            // Writable Factory create new Instance
+            Writable writable = WritableFactories.newInstance(instanceClass, conf);
             writable.readFields(in);
             instance = writable;
 
