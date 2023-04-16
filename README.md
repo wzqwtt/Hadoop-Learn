@@ -4,7 +4,7 @@
 
 - <span style="color:red"><b>Common：</b></span>
   - [X] Configuration配置类
-  - [ ] Serialiazation序列化
+  - [X] Serialiazation序列化
   - [ ] 压缩
   - [ ] ...
 - <span style="color:red"><b>HDFS：</b></span>
