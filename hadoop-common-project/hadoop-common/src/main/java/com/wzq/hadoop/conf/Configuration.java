@@ -209,8 +209,10 @@ public class Configuration {
                 loadResource(properties, resource, quiet);
             }
 
-            // TODO support the hadoop-site.xml as a deprecated case
-
+            // support the hadoop-site.xml as a deprecated case
+            if (getResource("hadoop-site.xml") != null) {
+                loadResource(properties, "hadoop-site.xml", quiet);
+            }
         }
         for (Object resource : resources) {
             LOG.debug("loadResources resource : [{}]", resource);
@@ -570,6 +572,61 @@ public class Configuration {
             return defaultValue;
         } else {
             return StringUtils.getStrings(valueString);
+        }
+    }
+
+    /**
+     * Load a class by name
+     *
+     * @param name the class name
+     * @return the class Object
+     */
+    public Class<?> getClassByName(String name) throws ClassNotFoundException {
+        return Class.forName(name, true, classLoader);
+    }
+
+    /**
+     * Get the value of the name property as a Class. if no such property is specified, then
+     * defaultValue is returned.
+     *
+     * @param name         the classname
+     * @param defaultValue default value
+     * @return property value as Class, or defaultValue
+     */
+    public Class<?> getClass(String name, Class<?> defaultValue) {
+        String valueString = get(name);
+        if (valueString == null) {
+            return defaultValue;
+        }
+        try {
+            return getClassByName(valueString);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Get the value of the name property as an array of Class. The value of the property specifies
+     * a list of comma separated class names. if no such property is specified, the defaultValue is
+     * returned.
+     *
+     * @param name         the property name
+     * @param defaultValue defalut value
+     * @return property value as a Class[], or defaultValue
+     */
+    public Class<?>[] getClasses(String name, Class<?>... defaultValue) {
+        String[] classnames = getStrings(name);
+        if (classnames == null) {
+            return defaultValue;
+        }
+        try {
+            Class<?>[] classes = new Class<?>[classnames.length];
+            for (int i = 0; i < classnames.length; i++) {
+                classes[i] = getClassByName(classnames[i]);
+            }
+            return classes;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
