@@ -22,7 +22,7 @@ public class SerializationFactory extends Configured {
     public SerializationFactory(Configuration conf) {
         super(conf);
         for (String serializerName : conf.getStrings("io.serializations",
-                new String[]{"com.wzq.hadoop.io.serializer.SerializationFactory"})) {
+                new String[]{"com.wzq.hadoop.io.serializer.WritableSerialization"})) {
             add(conf, serializerName);
         }
     }
@@ -32,16 +32,23 @@ public class SerializationFactory extends Configured {
         try {
             Class<? extends Serialization> serializationClass =
                     (Class<? extends Serialization>) conf.getClassByName(serializerName);
-            serializations.add((Serialization) ReflectionUtils.newInstance(serializationClass, getConf()));
+            LOG.debug("serializationClass: [{}]",serializationClass.getName());
+            serializations.add(ReflectionUtils.newInstance(serializationClass, getConf()));
         } catch (ClassNotFoundException e) {
             LOG.warn("Serilization class not found: " + StringUtils.stringifyException(e));
         }
     }
 
+    /**
+     * 获取Class的序列化器
+     */
     public <T> Serializer<T> getSerializer(Class<T> c) {
         return getSerialization(c).getSerializer(c);
     }
 
+    /**
+     * 获取Class的反序列化器
+     */
     public <T> Deserializer<T> getDeserializer(Class<T> c) {
         return getSerialization(c).getDeserializer(c);
     }
