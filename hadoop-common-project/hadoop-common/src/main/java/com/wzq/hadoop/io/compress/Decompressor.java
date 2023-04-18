@@ -36,6 +36,13 @@ public interface Decompressor {
     public void setDictionary(byte[] b, int off, int len);
 
     /**
+     * Returns <code>true</code> if a preset dictionary is needed for decompression.
+     *
+     * @return <code>true</code> if a preset dictionary is needed for decompression
+     */
+    public boolean needsDictionary();
+
+    /**
      * @return true if the end of the decompressed data output stream has been reached.
      */
     public boolean finished();

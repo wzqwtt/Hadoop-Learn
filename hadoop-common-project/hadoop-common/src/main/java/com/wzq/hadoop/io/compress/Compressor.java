@@ -57,7 +57,7 @@ public interface Compressor {
      * @param len size of the buffer
      * @return the actual number of bytes of compressed data.
      */
-    public int compres(byte[] b, int off, int len) throws IOException;
+    public int compress(byte[] b, int off, int len) throws IOException;
 
     /**
      * Resets compressor so that a new set of input data can be processed.
