@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * @author wzq
- * @create 2023-05-17 14:55
  */
 public abstract class FSInputStream extends InputStream
         implements Seekable, PositionedReadable {
